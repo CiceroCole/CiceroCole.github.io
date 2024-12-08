@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="C++ Boost.Asio实现Socket局域网通信需要的头文件： 12345#include &lt;iostream&gt;       &#x2F;&#x2F; 输入输出#include &lt;fstream&gt;        &#x2F;&#x2F; 文件操作#include &lt;string&gt;         &#x2F;&#x2F; 字符串操作#include &lt;filesystem&gt;     &#x2F;&#x2F; 文件操作#in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cpp socket通信">
+<meta property="og:url" content="https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/index.html">
+<meta property="og:site_name" content="纪江淮&#39;s Blog">
+<meta property="og:description" content="C++ Boost.Asio实现Socket局域网通信需要的头文件： 12345#include &lt;iostream&gt;       &#x2F;&#x2F; 输入输出#include &lt;fstream&gt;        &#x2F;&#x2F; 文件操作#include &lt;string&gt;         &#x2F;&#x2F; 字符串操作#include &lt;filesystem&gt;     &#x2F;&#x2F; 文件操作#in">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-12-08T14:47:11.000Z">
+<meta property="article:modified_time" content="2024-12-08T15:01:07.423Z">
+<meta property="article:author" content="纪江淮">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Cpp socket通信</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/BettterWorld-IX/BettterWorld-IX.github.io">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2024/12/08/Cpp%E6%89%B9%E9%87%8F%E9%87%8D%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&text=Cpp socket通信"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&title=Cpp socket通信"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&is_video=false&description=Cpp socket通信"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cpp socket通信&body=Check out this article: https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&title=Cpp socket通信"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&title=Cpp socket通信"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&title=Cpp socket通信"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&title=Cpp socket通信"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&name=Cpp socket通信&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&t=Cpp socket通信"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#C-Boost-Asio%E5%AE%9E%E7%8E%B0Socket%E5%B1%80%E5%9F%9F%E7%BD%91%E9%80%9A%E4%BF%A1"><span class="toc-number">1.</span> <span class="toc-text">C++ Boost.Asio实现Socket局域网通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%BA%90%E4%BB%A3%E7%A0%81"><span class="toc-number">1.1.</span> <span class="toc-text">客户端源代码:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%BA%90%E4%BB%A3%E7%A0%81"><span class="toc-number">1.2.</span> <span class="toc-text">服务端源代码:</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Cpp socket通信
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">纪江淮</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-12-08T14:47:11.000Z" class="dt-published" itemprop="datePublished">2024-12-08</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="C-Boost-Asio实现Socket局域网通信"><a href="#C-Boost-Asio实现Socket局域网通信" class="headerlink" title="C++ Boost.Asio实现Socket局域网通信"></a>C++ Boost.Asio实现Socket局域网通信</h2><p>需要的头文件：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span>       <span class="comment">// 输入输出</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span>        <span class="comment">// 文件操作</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span>         <span class="comment">// 字符串操作</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;filesystem&gt;</span>     <span class="comment">// 文件操作</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;boost/asio.hpp&gt;</span> <span class="comment">// socket通信</span></span></span><br></pre></td></tr></table></figure>
+<p>笔记</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">tcp::resolver resolver = tcp::<span class="built_in">resolver</span>(context);           <span class="comment">// 解析器</span></span><br><span class="line">tcp::endpoint ep = *resolver.<span class="built_in">resolve</span>(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="string">&quot;5555&quot;</span>); <span class="comment">// 解析域名</span></span><br><span class="line"><span class="function">tcp::resolver <span class="title">resolver</span><span class="params">(io)</span></span>;                                <span class="comment">// 解析器</span></span><br><span class="line">tcp::<span class="function">resolver::query <span class="title">q</span><span class="params">(<span class="string">&quot;www.baidu.com&quot;</span>, <span class="string">&quot;https&quot;</span>)</span></span>;          <span class="comment">// 查询</span></span><br><span class="line">tcp::resolver::iterator eq2 = resolver.<span class="built_in">resolve</span>(q);         <span class="comment">// 迭代器</span></span><br><span class="line">tcp::endpoint ep = *resolver.<span class="built_in">resolve</span>(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="string">&quot;5555&quot;</span>); <span class="comment">// 解析域名</span></span><br><span class="line"><span class="function">tcp::resolver <span class="title">resolver</span><span class="params">(io)</span></span>;                                <span class="comment">// 解析器</span></span><br><span class="line">tcp::<span class="function">resolver::query <span class="title">q</span><span class="params">(<span class="string">&quot;www.baidu.com&quot;</span>, <span class="string">&quot;https&quot;</span>)</span></span>;          <span class="comment">// 查询</span></span><br><span class="line">tcp::resolver::iterator eq2 = resolver.<span class="built_in">resolve</span>(q);         <span class="comment">// 迭代器</span></span><br><span class="line">sock.<span class="built_in">send</span>(...); <span class="comment">// 发送数据</span></span><br><span class="line">sock.<span class="built_in">write_some</span>(boost::asio::<span class="built_in">buffer</span>(<span class="string">&quot;hello world&quot;</span>, <span class="built_in">sizeof</span>(<span class="string">&quot;hello world&quot;</span>)));</span><br><span class="line">sock.<span class="built_in">async_send</span>(...); <span class="comment">// 异步</span></span><br><span class="line">io_context.<span class="built_in">run</span>();</span><br><span class="line">是一个成员函数，它的作用是启动异步操作的处理循环</span><br><span class="line">sock.<span class="built_in">shutdown</span>(tcp::socket::shutdown_both); <span class="comment">// 关闭连接</span></span><br></pre></td></tr></table></figure>
+<h3 id="客户端源代码"><a href="#客户端源代码" class="headerlink" title="客户端源代码:"></a>客户端源代码:</h3><p>预处理和命名空间：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// send.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> PORT 5555</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BUF_SIZE 1024</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> Error -1</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> boost::asio::ip::tcp;</span><br></pre></td></tr></table></figure>
+<p>发送文件函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">send_file</span><span class="params">(tcp::socket &amp;sock, std::string filename)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">std::ifstream <span class="title">file</span><span class="params">(filename, std::ios::binary)</span></span>;</span><br><span class="line">    <span class="keyword">if</span> (!file)</span><br><span class="line">        <span class="keyword">return</span> Error;</span><br><span class="line">    <span class="type">char</span> buffer[BUF_SIZE]; <span class="comment">// 分配内存</span></span><br><span class="line">    <span class="keyword">while</span> (file)</span><br><span class="line">    &#123;</span><br><span class="line">        file.<span class="built_in">read</span>(buffer, BUF_SIZE); <span class="comment">// 读取文件</span></span><br><span class="line">        <span class="keyword">if</span> (file.<span class="built_in">gcount</span>() &lt; BUF_SIZE)</span><br><span class="line">        &#123;</span><br><span class="line">            sock.<span class="built_in">send</span>(boost::asio::<span class="built_in">buffer</span>(buffer, file.<span class="built_in">gcount</span>()));</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        sock.<span class="built_in">send</span>(boost::asio::<span class="built_in">buffer</span>(buffer, BUF_SIZE));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参数解析函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">Parameter_parsing</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv, string &amp;FilenameOrMsg, <span class="type">int</span> &amp;Is_File, boost::asio::ip::address &amp;ip)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (argc != <span class="number">3</span>)</span><br><span class="line">        <span class="keyword">return</span> Error;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        boost::asio::ip::address _ip;</span><br><span class="line">        boost::system::error_code ec;</span><br><span class="line">        _ip = boost::asio::ip::address::<span class="built_in">from_string</span>(argv[<span class="number">1</span>], ec);</span><br><span class="line">        <span class="keyword">if</span> (ec)</span><br><span class="line">            <span class="keyword">return</span> Error;</span><br><span class="line">        ip = _ip;</span><br><span class="line">        FilenameOrMsg = <span class="built_in">string</span>(argv[<span class="number">2</span>]);</span><br><span class="line">        <span class="keyword">if</span> (filesystem::<span class="built_in">exists</span>(FilenameOrMsg) &amp;&amp; filesystem::<span class="built_in">is_regular_file</span>(FilenameOrMsg))</span><br><span class="line">            Is_File = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">try</span></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        boost::asio::io_context io_context;</span><br><span class="line">        <span class="function">tcp::socket <span class="title">sock</span><span class="params">(io_context)</span></span>;</span><br><span class="line">        boost::asio::ip::address TargetIp;</span><br><span class="line">        string FilenameOrMsg;</span><br><span class="line">        string &amp;FileName = FilenameOrMsg;</span><br><span class="line">        string &amp;Msg = FilenameOrMsg;</span><br><span class="line">        <span class="type">int</span> Is_File = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">Parameter_parsing</span>(argc, argv, FilenameOrMsg, Is_File, TargetIp) == Error)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 输出提示</span></span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;Usage: ./send &lt;ip&gt; &lt;filename or message&gt;&quot;</span> &lt;&lt; endl;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        sock.<span class="built_in">connect</span>(tcp::<span class="built_in">endpoint</span>(TargetIp, PORT));</span><br><span class="line">        <span class="keyword">if</span> (Is_File)</span><br><span class="line">        &#123;</span><br><span class="line">            string _FileSize = std::<span class="built_in">to_string</span>(std::filesystem::<span class="built_in">file_size</span>(FileName));</span><br><span class="line">            string _FileName = filesystem::<span class="built_in">path</span>(FilenameOrMsg).<span class="built_in">filename</span>().<span class="built_in">string</span>();</span><br><span class="line">            string _info = _FileName + <span class="string">&#x27;|&#x27;</span> + _FileSize;</span><br><span class="line">            <span class="type">size_t</span> _info_Size = _info.<span class="built_in">size</span>();</span><br><span class="line">            <span class="type">char</span> _info_Size_buffer[<span class="built_in">sizeof</span>(<span class="type">size_t</span>)];</span><br><span class="line">            <span class="built_in">memcpy</span>(_info_Size_buffer, &amp;_info_Size, <span class="built_in">sizeof</span>(<span class="type">size_t</span>));</span><br><span class="line">            <span class="type">char</span> Mode[<span class="number">10</span>] = <span class="string">&quot;FILE MODE&quot;</span>;</span><br><span class="line">            sock.<span class="built_in">send</span>(boost::asio::<span class="built_in">buffer</span>(Mode, <span class="number">10</span>));</span><br><span class="line">            sock.<span class="built_in">send</span>(boost::asio::<span class="built_in">buffer</span>(_info_Size_buffer, <span class="built_in">sizeof</span>(<span class="type">size_t</span>)));</span><br><span class="line">            sock.<span class="built_in">send</span>(boost::asio::<span class="built_in">buffer</span>(_info, _info_Size));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">char</span> Mode[<span class="number">10</span>] = <span class="string">&quot;MSGS MODE&quot;</span>;</span><br><span class="line">            sock.<span class="built_in">send</span>(boost::asio::<span class="built_in">buffer</span>(Mode, <span class="number">10</span>));</span><br><span class="line">            <span class="type">size_t</span> _Msg_Size = Msg.<span class="built_in">size</span>();</span><br><span class="line">            <span class="type">char</span> _Msg_Size_buffer[<span class="built_in">sizeof</span>(<span class="type">size_t</span>)];</span><br><span class="line">            <span class="built_in">memcpy</span>(_Msg_Size_buffer, &amp;_Msg_Size, <span class="built_in">sizeof</span>(<span class="type">size_t</span>));</span><br><span class="line">            <span class="type">int</span> len = sock.<span class="built_in">send</span>(boost::asio::<span class="built_in">buffer</span>(_Msg_Size_buffer, <span class="built_in">sizeof</span>(<span class="type">size_t</span>)));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">char</span> confirm_send = <span class="number">0</span>;</span><br><span class="line">        sock.<span class="built_in">read_some</span>(boost::asio::<span class="built_in">buffer</span>(&amp;confirm_send, <span class="built_in">sizeof</span>(<span class="type">char</span>)));</span><br><span class="line">        <span class="keyword">if</span> (Is_File)</span><br><span class="line">            <span class="keyword">if</span> (confirm_send || sock.<span class="built_in">is_open</span>())</span><br><span class="line">                <span class="built_in">send_file</span>(sock, FileName);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                cout &lt;&lt; <span class="string">&quot;对方已拒绝接受文件!&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            sock.<span class="built_in">send</span>(boost::asio::<span class="built_in">buffer</span>(Msg, Msg.<span class="built_in">size</span>()));</span><br><span class="line">        sock.<span class="built_in">close</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">catch</span> (<span class="type">const</span> boost::system::system_error &amp;e)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;无法链接至目标主机!&quot;</span> &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="服务端源代码"><a href="#服务端源代码" class="headerlink" title="服务端源代码:"></a>服务端源代码:</h3><p>确认文件是否接收函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">Confirm</span><span class="params">(string FileName, <span class="type">size_t</span> FileSize)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;文件名: &quot;</span> &lt;&lt; FileName &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;文件大小: &quot;</span> &lt;&lt; FileSize &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;是否接收文件(Y/N): &quot;</span>;</span><br><span class="line">    <span class="type">char</span> ch;</span><br><span class="line">    cin &gt;&gt; ch;</span><br><span class="line">    <span class="keyword">if</span> (ch == <span class="string">&#x27;Y&#x27;</span> || ch == <span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接收文件函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">recv_file</span><span class="params">(tcp::socket &amp;sock, std::string &amp;file_name)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">std::ofstream <span class="title">ofs</span><span class="params">(file_name, std::ios::binary)</span></span>;</span><br><span class="line">    <span class="type">char</span> buf[BUF_SIZE];</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> len = sock.<span class="built_in">read_some</span>(boost::asio::<span class="built_in">buffer</span>(buf, BUF_SIZE));</span><br><span class="line">        ofs.<span class="built_in">write</span>(buf, len);</span><br><span class="line">        <span class="keyword">if</span> (len &lt; BUF_SIZE)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>主函数部分:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;开始接收数据!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    boost::asio::io_context context;</span><br><span class="line">    <span class="function">tcp::socket <span class="title">sock</span><span class="params">(context)</span></span>;</span><br><span class="line">    <span class="function">tcp::endpoint <span class="title">ep</span><span class="params">(boost::asio::ip::address::from_string(<span class="string">&quot;0.0.0.0&quot;</span>), PORT)</span></span>;</span><br><span class="line">    <span class="function">tcp::acceptor <span class="title">acceptor</span><span class="params">(context, ep)</span></span>;</span><br><span class="line">    acceptor.<span class="built_in">accept</span>(sock);</span><br><span class="line">    <span class="type">char</span> Mode[<span class="number">10</span>] = <span class="string">&quot;FILE MODE&quot;</span>;</span><br><span class="line">    string FileName;</span><br><span class="line">    <span class="type">size_t</span> FileSize;</span><br><span class="line">    <span class="type">size_t</span> InfoSize;</span><br><span class="line">    sock.<span class="built_in">read_some</span>(boost::asio::<span class="built_in">buffer</span>(Mode, <span class="number">10</span>));</span><br><span class="line">    <span class="comment">// 将整数转换为字节流并存储到字符数组中</span></span><br><span class="line">    <span class="type">char</span> _InfoSize_buf[<span class="built_in">sizeof</span>(<span class="type">size_t</span>)];</span><br><span class="line">    sock.<span class="built_in">read_some</span>(boost::asio::<span class="built_in">buffer</span>(_InfoSize_buf, <span class="built_in">sizeof</span>(<span class="type">size_t</span>)));</span><br><span class="line">    std::<span class="built_in">memcpy</span>(&amp;InfoSize, _InfoSize_buf, <span class="built_in">sizeof</span>(<span class="type">size_t</span>));</span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">strcmp</span>(<span class="string">&quot;FILE MODE&quot;</span>, Mode))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">char</span> _File_NameSzie[InfoSize + <span class="number">1</span>];</span><br><span class="line">        <span class="type">int</span> Index = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> len = sock.<span class="built_in">read_some</span>(boost::asio::<span class="built_in">buffer</span>(_File_NameSzie, InfoSize));</span><br><span class="line">        _File_NameSzie[len] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;c : _File_NameSzie)</span><br><span class="line">        &#123;</span><br><span class="line">            Index++;</span><br><span class="line">            <span class="keyword">if</span> (c == <span class="string">&#x27;|&#x27;</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                string _StrT_FileSize = <span class="built_in">string</span>(_File_NameSzie).<span class="built_in">substr</span>(Index, InfoSize);</span><br><span class="line">                FileSize = <span class="built_in">stoi</span>(_StrT_FileSize);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            FileName = FileName + c;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">Confirm</span>(FileName, FileSize))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">char</span> Is_Confirm = <span class="number">1</span>;</span><br><span class="line">            sock.<span class="built_in">send</span>(boost::asio::<span class="built_in">buffer</span>(&amp;Is_Confirm, <span class="built_in">sizeof</span>(<span class="type">char</span>)));</span><br><span class="line">            <span class="built_in">recv_file</span>(sock, FileName);</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;文件接收成功!&quot;</span> &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;来自 &quot;</span> &lt;&lt; sock.<span class="built_in">remote_endpoint</span>().<span class="built_in">address</span>() &lt;&lt; <span class="string">&quot; 的消息: &quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="type">char</span> confirm_send = <span class="number">0</span>;</span><br><span class="line">        sock.<span class="built_in">send</span>(boost::asio::<span class="built_in">buffer</span>(&amp;confirm_send, <span class="built_in">sizeof</span>(<span class="type">char</span>)));</span><br><span class="line">        <span class="type">char</span> _Msg_buf[InfoSize + <span class="number">1</span>];</span><br><span class="line">        <span class="type">int</span> len = sock.<span class="built_in">read_some</span>(boost::asio::<span class="built_in">buffer</span>(_Msg_buf, InfoSize));</span><br><span class="line">        _Msg_buf[len] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">        cout &lt;&lt; _Msg_buf &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    sock.<span class="built_in">close</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/BettterWorld-IX/BettterWorld-IX.github.io">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#C-Boost-Asio%E5%AE%9E%E7%8E%B0Socket%E5%B1%80%E5%9F%9F%E7%BD%91%E9%80%9A%E4%BF%A1"><span class="toc-number">1.</span> <span class="toc-text">C++ Boost.Asio实现Socket局域网通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%BA%90%E4%BB%A3%E7%A0%81"><span class="toc-number">1.1.</span> <span class="toc-text">客户端源代码:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%BA%90%E4%BB%A3%E7%A0%81"><span class="toc-number">1.2.</span> <span class="toc-text">服务端源代码:</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&text=Cpp socket通信"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&title=Cpp socket通信"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&is_video=false&description=Cpp socket通信"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cpp socket通信&body=Check out this article: https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&title=Cpp socket通信"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&title=Cpp socket通信"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&title=Cpp socket通信"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&title=Cpp socket通信"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&name=Cpp socket通信&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://cicerocole.cc/2024/12/08/Cpp-socket%E9%80%9A%E4%BF%A1/&t=Cpp socket通信"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2024
+    纪江淮
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/BettterWorld-IX/BettterWorld-IX.github.io">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
