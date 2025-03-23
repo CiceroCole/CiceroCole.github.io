@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="差分数组+前缀和差分数组的推导公式:原数组为num,差分数组为diff,前缀和数组为sum, 12diff[0] &#x3D; num[0]diff[i] &#x3D; num[i] - num[i-1]  前缀和的推导公式:  12sum[0] &#x3D; num[0]sum[i] &#x3D; num[i] + sum[i-1]  差分数组主要用来大范围的区间修改 前缀和主要用来大范围的区间查询  举个例子，假设原数组为num，差">
+    <meta name="description" content="差分数组+前缀和 参考文章  差分数组+前缀和——小而美的算法 差分数组是个啥？能干啥？怎么用？ 什么是差分数组？   差分数组的推导公式:原数组为num,差分数组为diff,前缀和数组为sum, 12diff[0] &#x3D; num[0]diff[i] &#x3D; num[i] - num[i-1]  前缀和的推导公式:  12sum[0] &#x3D; num[0]sum[i] &#x3D; num[i] + sum[i-1]">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[算法] 差分数组+前缀和">
 <meta property="og:url" content="https://cicerocole.github.io/2025/03/23/%E7%AE%97%E6%B3%95-%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84-%E5%89%8D%E7%BC%80%E5%92%8C/index.html">
 <meta property="og:site_name" content="Cicero Cole">
-<meta property="og:description" content="差分数组+前缀和差分数组的推导公式:原数组为num,差分数组为diff,前缀和数组为sum, 12diff[0] &#x3D; num[0]diff[i] &#x3D; num[i] - num[i-1]  前缀和的推导公式:  12sum[0] &#x3D; num[0]sum[i] &#x3D; num[i] + sum[i-1]  差分数组主要用来大范围的区间修改 前缀和主要用来大范围的区间查询  举个例子，假设原数组为num，差">
+<meta property="og:description" content="差分数组+前缀和 参考文章  差分数组+前缀和——小而美的算法 差分数组是个啥？能干啥？怎么用？ 什么是差分数组？   差分数组的推导公式:原数组为num,差分数组为diff,前缀和数组为sum, 12diff[0] &#x3D; num[0]diff[i] &#x3D; num[i] - num[i-1]  前缀和的推导公式:  12sum[0] &#x3D; num[0]sum[i] &#x3D; num[i] + sum[i-1]">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-03-23T15:10:27.000Z">
-<meta property="article:modified_time" content="2025-03-23T16:41:48.390Z">
+<meta property="article:modified_time" content="2025-03-23T16:52:10.093Z">
 <meta property="article:author" content="Cicero Cole">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
@@ -158,7 +158,15 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h2 id="差分数组-前缀和"><a href="#差分数组-前缀和" class="headerlink" title="差分数组+前缀和"></a>差分数组+前缀和</h2><p>差分数组的推导公式:<br>原数组为num,差分数组为diff,前缀和数组为sum,</p>
+    <h2 id="差分数组-前缀和"><a href="#差分数组-前缀和" class="headerlink" title="差分数组+前缀和"></a>差分数组+前缀和</h2><blockquote>
+<p>参考文章</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_74408723/article/details/143067738">差分数组+前缀和——小而美的算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44786250/article/details/100056975">差分数组是个啥？能干啥？怎么用？</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_31601743/article/details/105352885">什么是差分数组？</a></li>
+</ul>
+</blockquote>
+<p>差分数组的推导公式:<br>原数组为num,差分数组为diff,前缀和数组为sum,</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">diff[<span class="number">0</span>] = num[<span class="number">0</span>]</span><br><span class="line">diff[i] = num[i] - num[i<span class="number">-1</span>] </span><br></pre></td></tr></table></figure>
 <p>前缀和的推导公式: </p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sum[<span class="number">0</span>] = num[<span class="number">0</span>]</span><br><span class="line">sum[i] = num[i] + sum[i<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>

@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="DLL 就是把一个C&#x2F;CPP程序功能作为文件供其它程序调用 dll文件用于动态调用，在程序运行时调用，dll文件修改动能调用方程序也不需要重新编译 lib文件用于静态调用，在编译时与调用方一起编译链接，编译出来的程序会比动态调用大  1.创建想要作为DLL的C源文件1234567891011121314151617181920212223&#x2F;&#x2F; test.c#ifdef __cpluspl">
+    <meta name="description" content="参考文章:  MinGW gcc 生成动态链接库 dll 的一些问题汇总（由浅入深，很详细） C++ 调用dll的方法 用cl 、link工具编译生成 dll 与 lib windows下python调用dll的方法 Python ctypes：在 C 和 Python 之间传送一维数组   DLL 就是把一个C&#x2F;CPP程序功能作为文件供其它程序调用 dll文件用于动态调用，在程序运行">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[CPP] C++生成DLL与LIB并调用">
 <meta property="og:url" content="https://cicerocole.github.io/2025/03/23/CPP-C-%E7%94%9F%E6%88%90DLL%E4%B8%8ELIB%E5%B9%B6%E8%B0%83%E7%94%A8/index.html">
 <meta property="og:site_name" content="Cicero Cole">
-<meta property="og:description" content="DLL 就是把一个C&#x2F;CPP程序功能作为文件供其它程序调用 dll文件用于动态调用，在程序运行时调用，dll文件修改动能调用方程序也不需要重新编译 lib文件用于静态调用，在编译时与调用方一起编译链接，编译出来的程序会比动态调用大  1.创建想要作为DLL的C源文件1234567891011121314151617181920212223&#x2F;&#x2F; test.c#ifdef __cpluspl">
+<meta property="og:description" content="参考文章:  MinGW gcc 生成动态链接库 dll 的一些问题汇总（由浅入深，很详细） C++ 调用dll的方法 用cl 、link工具编译生成 dll 与 lib windows下python调用dll的方法 Python ctypes：在 C 和 Python 之间传送一维数组   DLL 就是把一个C&#x2F;CPP程序功能作为文件供其它程序调用 dll文件用于动态调用，在程序运行">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-03-23T11:06:53.000Z">
-<meta property="article:modified_time" content="2025-03-23T13:29:54.407Z">
+<meta property="article:modified_time" content="2025-03-23T16:59:02.066Z">
 <meta property="article:author" content="Cicero Cole">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -160,7 +160,17 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h2 id="DLL-就是把一个C-CPP程序功能作为文件供其它程序调用"><a href="#DLL-就是把一个C-CPP程序功能作为文件供其它程序调用" class="headerlink" title="DLL 就是把一个C&#x2F;CPP程序功能作为文件供其它程序调用"></a>DLL 就是把一个C&#x2F;CPP程序功能作为文件供其它程序调用</h2><ul>
+    <blockquote>
+<p>参考文章:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/findumars/p/6546091.html">MinGW gcc 生成动态链接库 dll 的一些问题汇总（由浅入深，很详细）</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Sakuya__/article/details/105403172">C++ 调用dll的方法</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_33968104/article/details/91974204">用cl 、link工具编译生成 dll 与 lib</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/wolfcsharp/article/details/103751494">windows下python调用dll的方法</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/646797073">Python ctypes：在 C 和 Python 之间传送一维数组</a></li>
+</ul>
+</blockquote>
+<h2 id="DLL-就是把一个C-CPP程序功能作为文件供其它程序调用"><a href="#DLL-就是把一个C-CPP程序功能作为文件供其它程序调用" class="headerlink" title="DLL 就是把一个C&#x2F;CPP程序功能作为文件供其它程序调用"></a>DLL 就是把一个C&#x2F;CPP程序功能作为文件供其它程序调用</h2><ul>
 <li>dll文件用于<strong>动态调用</strong>，在程序运行时调用，dll文件修改动能<strong>调用方程序也不需要重新编译</strong></li>
 <li>lib文件用于<strong>静态调用</strong>，在编译时<strong>与调用方一起编译链接</strong>，编译出来的程序会比动态调用大</li>
 </ul>
