@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="线段树简述何为线段树 参考文章【学习笔记】详解线段树(浅显易懂,匠心之作,图文并茂)  简单来说，是通过原数组生成一个的一个二叉树，其中，树的每一个非叶子节点都是由其子节点通过一些算数运算生成的，比如求解区间和，就是每个节点对子节点求和生成的，每个节点存储的就是子节点的和， (node.value &#x3D; node.left.value + node.right.value) 或者区间最大值">
+    <meta name="description" content="线段树简述何为线段树 参考文章【学习笔记】详解线段树(浅显易懂,匠心之作,图文并茂)  简单来说，是通过原数组生成一个的一个二叉树，其中，树的每一个非叶子节点都是由其子节点通过一些算数运算生成的，比如求解区间和，就是每个节点对子节点求和生成的，每个节点存储的就是子节点的和， (node.value &#x3D; node.left.value + node.right.value) 或者区间最大值的树,就是">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[数据结构] 线段树笔记">
 <meta property="og:url" content="https://cicerocole.cc/2025/03/25/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%20%E7%BA%BF%E6%AE%B5%E6%A0%91%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Cicero Cole">
-<meta property="og:description" content="线段树简述何为线段树 参考文章【学习笔记】详解线段树(浅显易懂,匠心之作,图文并茂)  简单来说，是通过原数组生成一个的一个二叉树，其中，树的每一个非叶子节点都是由其子节点通过一些算数运算生成的，比如求解区间和，就是每个节点对子节点求和生成的，每个节点存储的就是子节点的和， (node.value &#x3D; node.left.value + node.right.value) 或者区间最大值">
+<meta property="og:description" content="线段树简述何为线段树 参考文章【学习笔记】详解线段树(浅显易懂,匠心之作,图文并茂)  简单来说，是通过原数组生成一个的一个二叉树，其中，树的每一个非叶子节点都是由其子节点通过一些算数运算生成的，比如求解区间和，就是每个节点对子节点求和生成的，每个节点存储的就是子节点的和， (node.value &#x3D; node.left.value + node.right.value) 或者区间最大值的树,就是">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cicerocole.cc/image/2025/0325/%E7%BA%BF%E6%AE%B5%E6%A0%91.jpg">
 <meta property="article:published_time" content="2025-03-25T13:43:49.000Z">
-<meta property="article:modified_time" content="2025-03-25T14:01:19.123Z">
+<meta property="article:modified_time" content="2025-03-25T14:11:36.913Z">
 <meta property="article:author" content="Cicero Cole">
 <meta property="article:tag" content="数据结构">
 <meta name="twitter:card" content="summary">
@@ -164,9 +164,9 @@
 <p>参考文章<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weq2011/article/details/128791426">【学习笔记】详解线段树(浅显易懂,匠心之作,图文并茂)</a></p>
 </blockquote>
 <p>简单来说，是通过原数组生成一个的一个二叉树，其中，树的每一个非叶子节点都是由其子节点通过一些算数运算生成的，比如求解区间和，就是每个节点对子节点求和生成的，每个节点存储的就是子节点的和，</p>
-<p><em>(node.value &#x3D; node.left.value + node.right.value)</em></p>
+<p><em><code>(node.value = node.left.value + node.right.value)</code></em></p>
 <p>或者区间最大值的树,就是取其中最大值生成的，每个节点就是子节点中的最大值</p>
-<p><em>(node.value &#x3D; max(node.left.value, node.right.value))。</em></p>
+<p><em><code>(node.value = max(node.left.value, node.right.value))</code></em></p>
 <p>线段树从叶子依次向上生成的。那么来说，每个非叶子节点的值<br>就是代表所有子节点的的有效值（或者说是特征（最大最小））的节点，每个节点代表的区间就是对应着所有子节点区间的合并区间。<br>例如叶子节点为原数组的值，那么其父节点的值就是其与兄弟节点的和（或者取最大最小值），<br>其父节点的所代表的区间就是其节点的区间与兄弟节点的区间的合并区间。<br>(因为每个叶子节点代表的区间就是他自己本身，所以其节点的区间与兄弟节点的区间的合并区间就是它们本身)</p>
 <p>其逻辑结构形如下图 (区间和的线段树): </p>
 <p><img src="/image/2025/0325/%E7%BA%BF%E6%AE%B5%E6%A0%91.jpg" alt="区间和的线段树"></p>
@@ -193,8 +193,8 @@
 <li>value : 节点所代表区间的总有效值</li>
 <li>lazy  : 节点所代表区间的修改值</li>
 </ul>
-<p>其中根节点为坐标为0，每一个地址为i的节点的左右孩子地址分别为i<em>2与i</em>2+1，父节点为i&#x2F;2，<br>其中线段树的主要作用是数组区间频繁查询或修改</p>
-<h3 id="区间频繁查询："><a href="#区间频繁查询：" class="headerlink" title="区间频繁查询："></a>区间频繁查询：</h3><p>查询涉及分治思想，分解，解决，合并。<br>若要查找的区间[l,r]与当前节点所包含的区间[start,end]完全相同<br>(即node.start&#x3D;l 且node.end&#x3D;r)<br>那么直接返回当前节点的值，因为当前节点就代表其包含区间的总有效值<br>若是从树顶至下查找区间[l,r]并不是与当前节点完全相同，那么无非三种情况，</p>
+<p>其中根节点为坐标为0，每一个地址为i的节点的左右孩子地址分别为<code>i*2</code>与<code>i*2+1</code>，父节点为<code>i/2</code>，<br>其中线段树的主要作用是数组区间频繁查询或修改</p>
+<h3 id="区间频繁查询："><a href="#区间频繁查询：" class="headerlink" title="区间频繁查询："></a>区间频繁查询：</h3><p>查询涉及分治思想，分解，解决，合并。<br>若要查找的区间<code>[l,r]</code>与当前节点所包含的区间<code>[start,end]</code>完全相同<br>(即node.start&#x3D;l 且node.end&#x3D;r)<br>那么直接返回当前节点的值，因为当前节点就代表其包含区间的总有效值<br>若是从树顶至下查找区间<code>[l,r]</code>并不是与当前节点完全相同，那么无非三种情况，</p>
 <ol>
 <li>要查找区间完全在当前节点完全在当前节点的左节点的区间<ul>
 <li>那么直接递归进入左子树继续查询</li>
@@ -205,13 +205,13 @@
 </ul>
 </li>
 <li>要查找区间完全在一部分在左节点的区间，一部在右节点的区间<ul>
-<li>将要查找的区间[l,r] 分为两部分[l, m][m,r] 其中m&#x3D;(l+r)&#x2F;2 ，</li>
-<li>再对左子树查询[l, m]，右子树查找[m,r]</li>
+<li>将要查找的区间<code>[l,r]</code> 分为两部分<code>[l, m]</code>与<code>[m,r]</code> 其中<code>m = (l+r)/2</code>，</li>
+<li>再对左子树查询<code>[l,m]</code>,右子树查找<code>[m,r]</code></li>
 </ul>
 </li>
 </ol>
-<p>以上情况会一直递归至要查找的区间[l,r]与当前节点所包含的区间[start,end]完全相同<br>那么就会递归返回其节点的值，其值即为最终的值。</p>
-<h3 id="区间频繁修改"><a href="#区间频繁修改" class="headerlink" title="区间频繁修改"></a>区间频繁修改</h3><p>区间频繁修改需要给每个节点添加一个新的属性lazy,<br>每个节点的lazy属性标志着其区间的修改标志，<br>例如，在一棵对于求区间和的线段树中，如果修改代表区间[l,r]区间的节点node的lazy为10<br>就代表在[l,r]这个区间中，每个值都添加10,但是不需要修改其所有子节点的值，只需要知道<br>当前节点的所有子节点个数n，再返回<code>node.v + 10 * n</code>即可。<br>设置区间的lazy的过程与查询区间相同，从线段树的根节点开始依次向下查找，<br>查找到符合区间的节点之后，设置其lazy属性即可。</p>
+<p>以上情况会一直递归至要查找的区间<code>[l,r]</code>与当前节点所包含的区间<code>[start,end]</code>完全相同<br>那么就会递归返回其节点的值，其值即为最终的值。</p>
+<h3 id="区间频繁修改"><a href="#区间频繁修改" class="headerlink" title="区间频繁修改"></a>区间频繁修改</h3><p>区间频繁修改需要给每个节点添加一个新的属性lazy,<br>每个节点的lazy属性标志着其区间的修改标志，<br>例如，在一棵对于求区间和的线段树中，如果修改代表区间<code>[l,r]</code>区间的节点node的lazy为10<br>就代表在<code>[l,r]</code>这个区间中，每个值都添加10,但是不需要修改其所有子节点的值，只需要知道<br>当前节点的所有子节点个数n，再返回<code>node.value + 10 * n</code>即可。<br>设置区间的lazy的过程与查询区间相同，从线段树的根节点开始依次向下查找，<br>查找到符合区间的节点之后，设置其lazy属性即可。</p>
 <h3 id="单点查询与修改"><a href="#单点查询与修改" class="headerlink" title="单点查询与修改"></a>单点查询与修改</h3><h4 id="单点查询"><a href="#单点查询" class="headerlink" title="单点查询"></a>单点查询</h4><p>如果想要在树中查询某个元素(叶子节点)的值，那么从根节点开始向下查找<br>在递归的过程中，若在当前当前节点的区间已经被修改，即lazy不为0,<br>那么在递归查找子节点时，就需要把当前节点的lazy设置给子节点，并将当前节点的lazy置零<br>这个操作叫做下放<code>pushdown</code><br>直至查找到要查询的节点元素时，通过lazy值来对当前节点的值修改<br>并把lazy置零，返回当前节点修改后的值</p>
 <h4 id="单点修改"><a href="#单点修改" class="headerlink" title="单点修改"></a>单点修改</h4><p>单点修改在单点查询的基础上，找到要修改的节点元素，再对节点进行修改<br>之后，从当前节点向父节点递归修改父节点的值，直至根节点<br>因为对单个叶子节点进行修改，可能会改变包含本节点区间的节点的值<br>（也可能不会，比如在区间最大值的线段树中，修改后的节点值仍然比兄弟节点小），<br>所以需要对父节点进行递归修改。</p>
 
